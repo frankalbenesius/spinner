@@ -44,7 +44,7 @@ class Spinner extends React.Component {
         <div className="testing-state">
           Current State<br />
           <br />
-          Quadrants:<br />
+          Sectors:<br />
           {this.state.sectors.map((sector, i) => (
             <div key={i}>
               Q{i + 1}: {sector} |{' '}
@@ -59,7 +59,7 @@ class Spinner extends React.Component {
           Random Number:{' '}
           {this.state.roll ? padStart(this.state.roll, 3, '0') : 'undefined'}
           <br />
-          Winning Quadrant: {this.state.winner || 'undefined'}
+          Winning Sector: {this.state.winner || 'undefined'}
           <br />
           <br />
           <button onClick={this.handleRoll}>spin</button>
