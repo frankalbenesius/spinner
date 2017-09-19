@@ -1,6 +1,40 @@
 import React from 'react'
+import { padStart, sum } from 'lodash'
+
+const roll = state => {
+  const roll = Math.floor(Math.random() * 1000)
+  const rangeStarts = [0, 1, 2, 3].map(i => getRangeStart(state, i))
+  let winner = 4
+  if (roll < rangeStarts[3]) {
+    winner = 3
+  }
+  if (roll < rangeStarts[2]) {
+    winner = 2
+  }
+  if (roll < rangeStarts[1]) {
+    winner = 1
+  }
+  return {
+    ...state,
+    roll,
+    winner,
+  }
+}
+
+const getRangeStart = (state, sector) => {
+  return sum(state.sectors.slice(0, sector))
+}
 
 class Spinner extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      sectors: [250, 250, 250, 250],
+      history: [0, 0, 0, 0],
+      roll: undefined,
+      winner: undefined,
+    }
+  }
   render() {
     return (
       <div className="circle">
@@ -8,21 +42,24 @@ class Spinner extends React.Component {
           Current State<br />
           <br />
           Quadrants:<br />
-          Q1: 250 | 000 | 00
-          <br />
-          Q2: 250 | 250 | 00
-          <br />
-          Q3: 250 | 500 | 00
-          <br />
-          Q4: 250 | 750 | 00
-          <br />
+          {this.state.sectors.map((sector, i) => (
+            <div key={i}>
+              Q{i + 1}: {sector} |{' '}
+              {padStart(getRangeStart(this.state, i), 3, '0')} |{' '}
+              {padStart(this.state.history[i], 2, '0')}
+              <br />
+            </div>
+          ))}
           <br />
           Shrink Factor: 30%<br />
           <br />
-          Random Number: undefined<br />
-          Winning Quadrant: undefined<br />
+          Random Number:{' '}
+          {this.state.roll ? padStart(this.state.roll, 3, '0') : 'undefined'}
           <br />
-          <button>spin</button>
+          Winning Quadrant: {this.state.winner || 'undefined'}
+          <br />
+          <br />
+          <button onClick={() => this.setState(roll)}>spin</button>
         </div>
         <style jsx>
           {`
