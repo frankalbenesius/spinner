@@ -14,8 +14,11 @@ const roll = state => {
   if (roll < rangeStarts[1]) {
     winner = 1
   }
+  const newHistory = state.history.slice()
+  newHistory[winner - 1] = newHistory[winner - 1] + 1
   return {
     ...state,
+    history: newHistory,
     roll,
     winner,
   }
@@ -26,14 +29,14 @@ const getRangeStart = (state, sector) => {
 }
 
 class Spinner extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      sectors: [250, 250, 250, 250],
-      history: [0, 0, 0, 0],
-      roll: undefined,
-      winner: undefined,
-    }
+  state = {
+    sectors: [250, 250, 250, 250],
+    history: [0, 0, 0, 0],
+    roll: undefined,
+    winner: undefined,
+  }
+  handleRoll = () => {
+    this.setState(roll)
   }
   render() {
     return (
@@ -59,7 +62,7 @@ class Spinner extends React.Component {
           Winning Quadrant: {this.state.winner || 'undefined'}
           <br />
           <br />
-          <button onClick={() => this.setState(roll)}>spin</button>
+          <button onClick={this.handleRoll}>spin</button>
         </div>
         <style jsx>
           {`
