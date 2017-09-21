@@ -23,6 +23,7 @@ export default ({ state }) => (
         font-family: monospace;
         background-color: black;
         opacity: 0.9;
+        user-select: none;
       }
       table {
         margin: 0 auto;

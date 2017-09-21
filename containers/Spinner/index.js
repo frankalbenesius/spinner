@@ -2,7 +2,9 @@ import React from 'react'
 import { padStart } from 'lodash'
 
 import { roll } from './actions'
-import StateDisplay from '../StateDisplay'
+import Circle from '../../components/Circle'
+import Sector from '../../components/Sector'
+import StateDisplay from '../../components/StateDisplay'
 
 class Spinner extends React.Component {
   state = {
@@ -11,21 +13,25 @@ class Spinner extends React.Component {
         size: 250,
         start: 0,
         wins: 0,
+        color: 'red',
       },
       {
         size: 250,
         start: 250,
         wins: 0,
+        color: 'yellow',
       },
       {
         size: 250,
         start: 500,
         wins: 0,
+        color: 'green',
       },
       {
         size: 250,
         start: 750,
         wins: 0,
+        color: 'violet',
       },
     ],
     reduction: 0.5,
@@ -38,22 +44,12 @@ class Spinner extends React.Component {
   render() {
     return (
       <div>
-        <div className="circle" onClick={this.handleRoll} />
+        <Circle onClick={this.handleRoll}>
+          {this.state.sectors.map((sector, i) => (
+            <Sector key={i} sector={sector} />
+          ))}
+        </Circle>
         <StateDisplay state={this.state} />
-        <style jsx>
-          {`
-            .circle {
-              background-color: black;
-              border-radius: 100%;
-              width: 90vmin;
-              height: 90vmin;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            }
-          `}
-        </style>
       </div>
     )
   }
