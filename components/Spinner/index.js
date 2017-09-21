@@ -2,6 +2,7 @@ import React from 'react'
 import { padStart } from 'lodash'
 
 import { roll } from './actions'
+import StateDisplay from '../StateDisplay'
 
 class Spinner extends React.Component {
   state = {
@@ -36,31 +37,9 @@ class Spinner extends React.Component {
   }
   render() {
     return (
-      <div className="circle">
-        <div className="content">
-          <table>
-            <thead>
-              <tr>
-                <th>sector</th>
-                <th>size</th>
-                <th>wins</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.sectors.map((sector, i) => (
-                <tr
-                  key={i}
-                  style={{ color: i === this.state.winner ? 'red' : 'white' }}
-                >
-                  <td>{i}</td>
-                  <td>{sector.size}</td>
-                  <td>{sector.wins}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <button onClick={this.handleRoll}>spin</button>
-        </div>
+      <div>
+        <div className="circle" onClick={this.handleRoll} />
+        <StateDisplay state={this.state} />
         <style jsx>
           {`
             .circle {
@@ -72,30 +51,6 @@ class Spinner extends React.Component {
               top: 50%;
               left: 50%;
               transform: translate(-50%, -50%);
-            }
-            .content {
-              padding-top: 20vmin;
-              text-align: center;
-              color: white;
-              font-family: monospace;
-              font-size: 2rem;
-            }
-            table {
-              margin: 0 auto;
-            }
-            th,
-            td {
-              font-weight: normal;
-              padding: 0.2rem 0.5rem;
-            }
-            button {
-              margin-top: 2rem;
-              border: none;
-              border-radius: 0.2rem;
-              background-color: white;
-              padding: 1rem 2rem;
-              font-size: 2rem;
-              font-family: monospace;
             }
           `}
         </style>
