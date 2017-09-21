@@ -13,25 +13,21 @@ class Spinner extends React.Component {
         size: 250,
         start: 0,
         wins: 0,
-        color: 'red',
       },
       {
         size: 250,
         start: 250,
         wins: 0,
-        color: 'yellow',
       },
       {
         size: 250,
         start: 500,
         wins: 0,
-        color: 'green',
       },
       {
         size: 250,
         start: 750,
         wins: 0,
-        color: 'violet',
       },
     ],
     reduction: 0.5,
@@ -46,7 +42,7 @@ class Spinner extends React.Component {
       <div>
         <Circle onClick={this.handleRoll}>
           {this.state.sectors.map((sector, i) => (
-            <Sector key={i} sector={sector} />
+            <Sector key={i} index={i} sector={sector} />
           ))}
         </Circle>
         <StateDisplay state={this.state} />

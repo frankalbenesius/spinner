@@ -1,6 +1,15 @@
 import React from 'react'
 
-export default ({ sector }) => {
+import colors from '../colors'
+
+const sectorColors = [
+  colors.blue[5],
+  colors.red[5],
+  colors.yellow[5],
+  colors.green[5],
+]
+
+export default ({ sector, index }) => {
   const radius = 23
   const circumference = 2 * Math.PI * radius
   const arc = sector.size / 1000 * circumference
@@ -12,7 +21,7 @@ export default ({ sector }) => {
         cx={50}
         cy={50}
         fill="none"
-        stroke={sector.color}
+        stroke={sectorColors[index]}
         strokeWidth={radius * 2}
         strokeDasharray={`0 ${rotation} ${arc} ${2 * Math.PI * 45}`}
       />

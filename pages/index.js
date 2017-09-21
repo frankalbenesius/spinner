@@ -1,22 +1,12 @@
 import React from 'react'
 
+import Wrapper from '../components/Wrapper'
 import Spinner from '../containers/Spinner'
 
 const IndexPage = () => (
-  <div>
+  <Wrapper>
     <Spinner />
-    <style jsx global>
-      {`
-        body {
-          background-color: #ddd;
-          margin: 0;
-        }
-        * > * {
-          box-sizing: border-box;
-        }
-      `}
-    </style>
-  </div>
+  </Wrapper>
 )
 
 export default IndexPage
