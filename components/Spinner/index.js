@@ -48,7 +48,10 @@ class Spinner extends React.Component {
             </thead>
             <tbody>
               {this.state.sectors.map((sector, i) => (
-                <tr key={i}>
+                <tr
+                  key={i}
+                  style={{ color: i === this.state.winner ? 'red' : 'white' }}
+                >
                   <td>{i}</td>
                   <td>{sector.size}</td>
                   <td>{sector.wins}</td>
@@ -56,12 +59,6 @@ class Spinner extends React.Component {
               ))}
             </tbody>
           </table>
-          <div>roll: {this.state.roll}</div>
-          <div>winner: {this.state.winner}</div>
-          <div>
-            total:{' '}
-            {this.state.sectors.reduce((acc, sector) => acc + sector.size, 0)}
-          </div>
           <button onClick={this.handleRoll}>spin</button>
         </div>
         <style jsx>
@@ -77,7 +74,7 @@ class Spinner extends React.Component {
               transform: translate(-50%, -50%);
             }
             .content {
-              padding: 5rem;
+              padding-top: 20vmin;
               text-align: center;
               color: white;
               font-family: monospace;
@@ -91,10 +88,8 @@ class Spinner extends React.Component {
               font-weight: normal;
               padding: 0.2rem 0.5rem;
             }
-            .content div {
-              margin: 1rem;
-            }
             button {
+              margin-top: 2rem;
               border: none;
               border-radius: 0.2rem;
               background-color: white;
