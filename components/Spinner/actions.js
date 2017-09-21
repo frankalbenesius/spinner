@@ -6,21 +6,31 @@ const getRangeStart = (state, sector) => {
 
 export const roll = state => {
   const roll = Math.floor(Math.random() * 1000) // 0 - 999
-  const winner = state.sectors.filter(sector => sector.start <= roll).length - 1
+  const winningIndex =
+    state.sectors.filter(sector => sector.start <= roll).length - 1
+  const winningSector = state.sectors[winningIndex]
+  const rawChangeInSize = winningSector.size * state.reduction
+  const spreadCount = state.sectors.length - 1
+  const changeInSize = rawChangeInSize - rawChangeInSize % spreadCount
+
+  const sectors = state.sectors.map((sector, index) => {
+    if (index === winningIndex) {
+      return {
+        ...sector,
+        size: sector.size - changeInSize,
+      }
+    } else {
+      return {
+        ...sector,
+        size: sector.size + changeInSize / 3,
+      }
+    }
+  })
 
   return {
     ...state,
-    sectors: [
-      ...state.sectors.slice(0, winner),
-      {
-        ...state.sectors[winner],
-        // size: ?
-        // start: ?
-        wins: state.sectors[winner].wins + 1,
-      },
-      ...state.sectors.slice(winner + 1),
-    ],
+    sectors,
     roll,
-    winner,
+    winner: winningIndex,
   }
 }

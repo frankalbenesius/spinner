@@ -27,6 +27,7 @@ class Spinner extends React.Component {
         wins: 0,
       },
     ],
+    reduction: 0.5,
     roll: 0,
     winner: undefined,
   }
@@ -57,6 +58,10 @@ class Spinner extends React.Component {
           </table>
           <div>roll: {this.state.roll}</div>
           <div>winner: {this.state.winner}</div>
+          <div>
+            total:{' '}
+            {this.state.sectors.reduce((acc, sector) => acc + sector.size, 0)}
+          </div>
           <button onClick={this.handleRoll}>spin</button>
         </div>
         <style jsx>
