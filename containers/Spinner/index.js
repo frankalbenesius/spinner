@@ -4,7 +4,7 @@ import { padStart } from 'lodash'
 import { roll } from './actions'
 import Circle from '../../components/Circle'
 import Sector from '../../components/Sector'
-import StateDisplay from '../../components/StateDisplay'
+import Arrow from '../../components/Arrow'
 
 class Spinner extends React.Component {
   state = {
@@ -30,7 +30,7 @@ class Spinner extends React.Component {
         wins: 0,
       },
     ],
-    reduction: 0.5,
+    reduction: 0.75,
     roll: 0,
     winner: undefined,
   }
@@ -39,14 +39,12 @@ class Spinner extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Circle onClick={this.handleRoll}>
-          {this.state.sectors.map((sector, i) => (
-            <Sector key={i} index={i} sector={sector} />
-          ))}
-        </Circle>
-        <StateDisplay state={this.state} />
-      </div>
+      <Circle onClick={this.handleRoll}>
+        {this.state.sectors.map((sector, i) => (
+          <Sector key={i} index={i} sector={sector} />
+        ))}
+        <Arrow roll={this.state.roll} />
+      </Circle>
     )
   }
 }
