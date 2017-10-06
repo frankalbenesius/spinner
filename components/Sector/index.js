@@ -10,10 +10,10 @@ const sectorColors = [
   colors.green[5],
 ]
 
-export default ({ sector, index }) => {
+export default ({ index, size, start }) => {
   const circumference = 2 * Math.PI * sectorRadius
-  const arc = sector.size / 1000 * circumference
-  const rotation = sector.start / 1000 * circumference
+  const arc = size / 1000 * circumference
+  const rotation = start / 1000 * circumference
   return (
     <g>
       <circle

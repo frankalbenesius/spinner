@@ -1,39 +1,33 @@
 import { sum } from 'lodash'
 
+import { getSectorStart } from './helpers'
+
 export const roll = state => {
   const roll = Math.floor(Math.random() * 1000) // 0 - 999
-  const winningIndex =
-    state.sectors.filter(sector => sector.start <= roll).length - 1
-  const winningSector = state.sectors[winningIndex]
-  const rawChangeInSize = winningSector.size * state.reduction
-  const spreadCount = state.sectors.length - 1
+
+  const starts = state.sizes.map((sector, i, sizes) => {
+    return getSectorStart(sizes, i)
+  })
+  const winner = starts.filter(start => start <= roll).length - 1
+
+  const winningSize = state.sizes[winner]
+  const rawChangeInSize = winningSize * state.reduction
+  const spreadCount = state.sizes.length - 1
   const changeInSize = rawChangeInSize - rawChangeInSize % spreadCount
 
-  // create new sectors with updated sizes
-  const sectors = state.sectors.map((sector, index, arr) => {
-    if (index === winningIndex) {
-      return {
-        ...sector,
-        size: sector.size - changeInSize,
-        wins: sector.wins + 1,
-      }
+  // create new sizes with updated sizes
+  const sizes = state.sizes.map((size, index) => {
+    if (index === winner) {
+      return size - changeInSize
     } else {
-      return {
-        ...sector,
-        size: sector.size + changeInSize / 3,
-      }
+      return size + changeInSize / 3
     }
-  })
-
-  // update the start values of the new sectors based on new sizes
-  sectors.forEach((sector, index) => {
-    sector.start = sectors.slice(0, index).reduce((sum, s) => s.size + sum, 0)
   })
 
   return {
     ...state,
-    sectors,
+    sizes,
     roll,
-    winner: winningIndex,
+    winner,
   }
 }
