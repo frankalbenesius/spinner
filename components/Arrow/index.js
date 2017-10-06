@@ -22,12 +22,17 @@ export default ({ roll, total }) => {
         M ${length + 2} ${center}
         l -5 3
         l 0 -6
+        L ${length + 2} ${center}
+        l -5 3
         `}
-        fill={colors.black}
+        fill={colors.gray[0]}
+        stroke={colors.black}
       />
       <style jsx>{`
         g {
           transition: 0.5s;
+        }
+        path {
         }
       `}</style>
     </g>

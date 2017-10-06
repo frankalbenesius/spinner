@@ -6,6 +6,7 @@ import colors from '../colors'
 export default ({ children }) => (
   <div className="flex">
     <Head>
+      <title>SPINNER</title>
       <link
         href="https://fonts.googleapis.com/css?family=Dosis"
         rel="stylesheet"
