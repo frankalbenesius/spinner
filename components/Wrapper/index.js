@@ -1,9 +1,16 @@
 import React from 'react'
+import Head from 'next/head'
 
 import colors from '../colors'
 
 export default ({ children }) => (
   <div className="flex">
+    <Head>
+      <link
+        href="https://fonts.googleapis.com/css?family=Dosis"
+        rel="stylesheet"
+      />
+    </Head>
     {children}
     <style jsx>{`
       .flex {

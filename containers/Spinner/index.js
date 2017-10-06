@@ -3,9 +3,10 @@ import { sum } from 'lodash'
 
 import { roll } from './actions'
 
-import Circle from '../../components/Circle'
+import SVGWrapper from '../../components/SVGWrapper'
 import Sector from '../../components/Sector'
 import Arrow from '../../components/Arrow'
+import Button from '../../components/Button'
 
 class Spinner extends React.Component {
   state = {
@@ -19,7 +20,7 @@ class Spinner extends React.Component {
   }
   render() {
     return (
-      <Circle onClick={this.handleRoll}>
+      <SVGWrapper>
         {this.state.sizes.map((size, i, sizes) => (
           <Sector
             key={i}
@@ -29,7 +30,8 @@ class Spinner extends React.Component {
           />
         ))}
         <Arrow roll={this.state.roll} />
-      </Circle>
+        <Button onClick={this.handleRoll}>spin</Button>
+      </SVGWrapper>
     )
   }
 }
