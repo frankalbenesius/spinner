@@ -1,33 +1,58 @@
 import React from 'react'
 
 import { sectorRadius, center } from '../constants'
+const textLine = center / 1.5
 import colors from '../colors'
 
-const sectorColors = [
-  colors.blue[5],
-  colors.red[5],
-  colors.yellow[5],
-  colors.green[5],
-]
+const sectorColors = ['blue', 'red', 'yellow', 'green']
 
 export default ({ index, size, start }) => {
   const circumference = 2 * Math.PI * sectorRadius
-  const arc = size / 1000 * circumference
+  const percentageOfCircle = size / 1000
+  const arc = percentageOfCircle * circumference
   const rotation = start / 1000 * circumference
+  const gradient = colors[sectorColors[index]]
+  const textRotation = (start / 1000 + percentageOfCircle / 2) * 360
   return (
     <g>
+      <defs>
+        <path
+          id="textCircle"
+          d={`
+          M ${center} ${center}
+          m -${textLine}, 0
+          a ${textLine},${textLine} 0 0,1 ${textLine * 2},0
+          a ${textLine},${textLine} 0 0,1 -${textLine * 2},0
+          `}
+          transform={`rotate(180, ${center}, ${center})`}
+        />
+      </defs>
       <circle
         r={sectorRadius}
         cx={center}
         cy={center}
         fill="none"
-        stroke={sectorColors[index]}
+        stroke={gradient[5]}
         strokeWidth={sectorRadius * 2}
         strokeDasharray={`0 ${rotation} ${arc} ${circumference}`}
       />
+      <text
+        fill={gradient[7]}
+        transform={`rotate(${textRotation}, ${center}, ${center})`}
+      >
+        <textPath xlinkHref="#textCircle">{index + 1}</textPath>
+      </text>
       <style jsx>{`
         circle {
           transition: stroke-dasharray 0.5s;
+        }
+        text {
+          font-size: 0.6rem;
+          text-anchor: middle;
+          transition: 0.5s;
+        }
+        g {
+          transition: 0.5s;
         }
       `}</style>
     </g>

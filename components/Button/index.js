@@ -36,7 +36,6 @@ export default ({ onClick, children }) => (
           font-size: 0.5rem;
           dominant-baseline: central;
           text-transform: uppercase;
-          font-family: Dosis, Arial, Helvetica, sans-serif;
         }
       `}
     </style>

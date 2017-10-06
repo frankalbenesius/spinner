@@ -28,6 +28,7 @@ export default ({ children }) => (
         body {
           background-color: ${colors.black};
           margin: 0;
+          font-family: Dosis, Arial, Helvetica, sans-serif;
         }
         * > * {
           box-sizing: border-box;
