@@ -1,26 +1,21 @@
 import { sum } from 'lodash'
 
-import { getSectorStart } from './helpers'
-
 export const roll = state => {
-  const roll = Math.floor(Math.random() * 1000) // 0 - 999
-
-  const starts = state.sizes.map((sector, i, sizes) => {
-    return getSectorStart(sizes, i)
-  })
+  const roll = Math.floor(Math.random() * sum(state.sizes))
+  const starts = state.sizes.map((x, i, sizes) => sum(sizes.slice(0, i)))
   const winner = starts.filter(start => start <= roll).length - 1
 
-  const winningSize = state.sizes[winner]
-  const rawChangeInSize = winningSize * state.reduction
-  const spreadCount = state.sizes.length - 1
-  const changeInSize = rawChangeInSize - rawChangeInSize % spreadCount
+  // our largest size must be reduced by a number that is
+  // easily divisible by the remaining sectors
+  const rawDelta = state.sizes[winner] * state.reduction
+  const delta = rawDelta - rawDelta % (state.sizes.length - 1)
 
   // create new sizes with updated sizes
   const sizes = state.sizes.map((size, index) => {
     if (index === winner) {
-      return size - changeInSize
+      return size - delta
     } else {
-      return size + changeInSize / 3
+      return size + delta / 3
     }
   })
 

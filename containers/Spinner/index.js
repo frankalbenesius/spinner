@@ -1,8 +1,7 @@
 import React from 'react'
-import { padStart } from 'lodash'
+import { sum } from 'lodash'
 
 import { roll } from './actions'
-import { getSectorStart } from './helpers'
 
 import Circle from '../../components/Circle'
 import Sector from '../../components/Sector'
@@ -21,12 +20,12 @@ class Spinner extends React.Component {
   render() {
     return (
       <Circle onClick={this.handleRoll}>
-        {this.state.sizes.map((size, i) => (
+        {this.state.sizes.map((size, i, sizes) => (
           <Sector
             key={i}
             index={i}
             size={size}
-            start={getSectorStart(this.state.sizes, i)}
+            start={sum(sizes.slice(0, i))}
           />
         ))}
         <Arrow roll={this.state.roll} />
