@@ -1,9 +1,5 @@
 import { sum } from 'lodash'
 
-const getRangeStart = (state, sector) => {
-  return sum(state.sectors.slice(0, sector))
-}
-
 export const roll = state => {
   const roll = Math.floor(Math.random() * 1000) // 0 - 999
   const winningIndex =
