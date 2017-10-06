@@ -7,6 +7,7 @@ export default ({ children }) => (
   <div className="flex">
     <Head>
       <title>SPINNER</title>
+      <link rel="icon" href="/static/favicon.ico" />
       <link
         href="https://fonts.googleapis.com/css?family=Dosis"
         rel="stylesheet"
