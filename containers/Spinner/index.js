@@ -29,7 +29,7 @@ class Spinner extends React.Component {
             start={sum(sizes.slice(0, i))}
           />
         ))}
-        <Arrow roll={this.state.roll} />
+        <Arrow roll={this.state.roll} total={sum(this.state.sizes)} />
         <Button onClick={this.handleRoll}>spin</Button>
       </SVGWrapper>
     )
