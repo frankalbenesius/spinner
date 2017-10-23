@@ -3,10 +3,14 @@ import React from 'react'
 import Wrapper from '../components/Wrapper'
 import Spinner from '../containers/Spinner'
 
-const IndexPage = () => (
+const IndexPage = ({ query }) => (
   <Wrapper>
-    <Spinner />
+    <Spinner query={query} />
   </Wrapper>
 )
+
+IndexPage.getInitialProps = ({ query }) => {
+  return { query }
+}
 
 export default IndexPage
