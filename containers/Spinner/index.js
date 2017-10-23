@@ -20,23 +20,21 @@ class Spinner extends React.Component {
     this.setState(roll)
   }
   render() {
-    return (
-      <div>
-        <SVGWrapper>
-          {this.state.sizes.map((size, i, sizes) => (
-            <Sector
-              key={i}
-              index={i}
-              size={size}
-              start={sum(sizes.slice(0, i))}
-            />
-          ))}
-          <Arrow roll={this.state.roll} total={sum(this.state.sizes)} />
-          <Button onClick={this.handleRoll}>spin</Button>
-        </SVGWrapper>
-        <StateDisplay state={this.state} />
-      </div>
-    )
+    return [
+      <SVGWrapper>
+        {this.state.sizes.map((size, i, sizes) => (
+          <Sector
+            key={i}
+            index={i}
+            size={size}
+            start={sum(sizes.slice(0, i))}
+          />
+        ))}
+        <Arrow roll={this.state.roll} total={sum(this.state.sizes)} />
+        <Button onClick={this.handleRoll}>spin</Button>
+      </SVGWrapper>,
+      <StateDisplay state={this.state} />,
+    ]
   }
 }
 
