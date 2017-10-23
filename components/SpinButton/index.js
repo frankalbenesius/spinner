@@ -31,7 +31,7 @@ export default ({ onClick, disabled }) => {
           svg circle {
             fill: ${colors.gray[0]};
             stroke: ${colors.black};
-            transition: 0.3s fill;
+            transition: 0.1s fill;
           }
           svg:hover circle {
             fill: ${colors.gray[1]};

@@ -16,19 +16,18 @@ class Spinner extends React.Component {
     sizes: [250, 250, 250, 250],
     reduction: 0.75,
     spin: 0,
-    winner: undefined,
     spinnable: true, //adj.	Capable of being spun.
     phase: 'waiting',
   }
   handleSpin = async () => {
     this.setState(spin)
-    await wait(1000)
+    await wait(100)
     this.setState(land)
-    await wait(1000)
+    await wait(800)
     this.setState(celebrate)
-    await wait(1000)
+    await wait(200)
     this.setState(resize)
-    await wait(1000)
+    await wait(500)
     this.setState(reset)
   }
   render() {
