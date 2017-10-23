@@ -1,23 +1,35 @@
 import React from 'react'
 import { sum } from 'lodash'
 
-import { roll } from './actions'
+import { spin, land, celebrate, resize, reset } from './actions'
 
 import SVGWrapper from '../../components/SVGWrapper'
 import Sector from '../../components/Sector'
 import Arrow from '../../components/Arrow'
-import Button from '../../components/Button'
+import SpinButton from '../../components/SpinButton'
 import StateDisplay from '../../components/StateDisplay'
+
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 class Spinner extends React.Component {
   state = {
     sizes: [250, 250, 250, 250],
     reduction: 0.75,
-    roll: 0,
+    spin: 0,
     winner: undefined,
+    spinnable: true, //adj.	Capable of being spun.
+    phase: 'waiting',
   }
-  handleRoll = () => {
-    this.setState(roll)
+  handleSpin = async () => {
+    this.setState(spin)
+    await wait(1000)
+    this.setState(land)
+    await wait(1000)
+    this.setState(celebrate)
+    await wait(1000)
+    this.setState(resize)
+    await wait(1000)
+    this.setState(reset)
   }
   render() {
     return (
@@ -31,8 +43,11 @@ class Spinner extends React.Component {
               start={sum(sizes.slice(0, i))}
             />
           ))}
-          <Arrow roll={this.state.roll} total={sum(this.state.sizes)} />
-          <Button onClick={this.handleRoll}>spin</Button>
+          <Arrow spin={this.state.spin} total={sum(this.state.sizes)} />
+          <SpinButton
+            disabled={!this.state.spinnable}
+            onClick={this.handleSpin}
+          />
         </SVGWrapper>
         <StateDisplay
           shouldRender={this.props.query.state !== undefined}

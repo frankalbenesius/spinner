@@ -3,8 +3,8 @@ import React from 'react'
 import { sectorRadius, center } from '../constants'
 import colors from '../colors'
 
-export default ({ roll, total }) => {
-  const rotation = roll / total * 360
+export default ({ spin, total }) => {
+  const rotation = spin / total * 360
   const length = center * 2 - 12
   return (
     <g transform={`rotate(${rotation}, ${center}, ${center})`}>

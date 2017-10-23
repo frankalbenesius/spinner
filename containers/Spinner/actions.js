@@ -1,9 +1,9 @@
 import { sum } from 'lodash'
 
-export const roll = state => {
-  const roll = Math.floor(Math.random() * sum(state.sizes))
+export const spin = state => {
+  const spin = Math.floor(Math.random() * sum(state.sizes))
   const starts = state.sizes.map((x, i, sizes) => sum(sizes.slice(0, i)))
-  const winner = starts.filter(start => start <= roll).length - 1
+  const winner = starts.filter(start => start <= spin).length - 1
 
   // our largest size must be reduced by a number that is
   // easily divisible by the remaining sectors
@@ -21,8 +21,39 @@ export const roll = state => {
 
   return {
     ...state,
+    phase: 'spinning',
+    spinnable: false,
     sizes,
-    roll,
+    spin,
     winner,
+  }
+}
+
+export const land = state => {
+  return {
+    ...state,
+    phase: 'landing',
+  }
+}
+
+export const celebrate = state => {
+  return {
+    ...state,
+    phase: 'celebrating',
+  }
+}
+
+export const resize = state => {
+  return {
+    ...state,
+    phase: 'resizing',
+  }
+}
+
+export const reset = state => {
+  return {
+    ...state,
+    phase: 'waiting',
+    spinnable: true,
   }
 }
