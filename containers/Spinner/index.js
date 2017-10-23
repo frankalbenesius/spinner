@@ -7,6 +7,7 @@ import SVGWrapper from '../../components/SVGWrapper'
 import Sector from '../../components/Sector'
 import Arrow from '../../components/Arrow'
 import Button from '../../components/Button'
+import StateDisplay from '../../components/StateDisplay'
 
 class Spinner extends React.Component {
   state = {
@@ -20,18 +21,21 @@ class Spinner extends React.Component {
   }
   render() {
     return (
-      <SVGWrapper>
-        {this.state.sizes.map((size, i, sizes) => (
-          <Sector
-            key={i}
-            index={i}
-            size={size}
-            start={sum(sizes.slice(0, i))}
-          />
-        ))}
-        <Arrow roll={this.state.roll} total={sum(this.state.sizes)} />
-        <Button onClick={this.handleRoll}>spin</Button>
-      </SVGWrapper>
+      <div>
+        <SVGWrapper>
+          {this.state.sizes.map((size, i, sizes) => (
+            <Sector
+              key={i}
+              index={i}
+              size={size}
+              start={sum(sizes.slice(0, i))}
+            />
+          ))}
+          <Arrow roll={this.state.roll} total={sum(this.state.sizes)} />
+          <Button onClick={this.handleRoll}>spin</Button>
+        </SVGWrapper>
+        <StateDisplay state={this.state} />
+      </div>
     )
   }
 }
