@@ -2,6 +2,7 @@ import React from 'react'
 import { sum } from 'lodash'
 
 import { spin, land, celebrate, resize, reset } from './actions'
+import { spinMs } from '../../components/constants'
 
 import SVGWrapper from '../../components/SVGWrapper'
 import Sector from '../../components/Sector'
@@ -23,7 +24,7 @@ class Spinner extends React.Component {
     this.setState(spin)
     await wait(100)
     this.setState(land)
-    await wait(800)
+    await wait(spinMs)
     this.setState(celebrate)
     await wait(200)
     this.setState(resize)
