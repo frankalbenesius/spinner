@@ -1,13 +1,14 @@
 import React from 'react'
+import { Motion, spring } from 'react-motion'
 
 import { sectorRadius, center } from '../constants'
+const circumference = 2 * Math.PI * sectorRadius
 const textLine = center / 1.5
 import colors from '../colors'
 
 const sectorColors = ['blue', 'red', 'yellow', 'green']
 
 export default ({ index, size, start }) => {
-  const circumference = 2 * Math.PI * sectorRadius
   const percentageOfCircle = size / 1000
   const arc = percentageOfCircle * circumference
   const rotation = start / 1000 * circumference
@@ -27,32 +28,33 @@ export default ({ index, size, start }) => {
           transform={`rotate(180, ${center}, ${center})`}
         />
       </defs>
-      <circle
-        r={sectorRadius}
-        cx={center}
-        cy={center}
-        fill="none"
-        stroke={gradient[5]}
-        strokeWidth={sectorRadius * 2}
-        strokeDasharray={`0 ${rotation} ${arc} ${circumference}`}
-      />
-      <text
-        fill={gradient[7]}
-        transform={`rotate(${textRotation}, ${center}, ${center})`}
-      >
-        <textPath xlinkHref="#textCircle">{index + 1}</textPath>
-      </text>
+      <Motion style={{ rotation: spring(rotation), arc: spring(arc) }}>
+        {interpolated => (
+          <circle
+            r={sectorRadius}
+            cx={center}
+            cy={center}
+            fill="none"
+            stroke={gradient[5]}
+            strokeWidth={sectorRadius * 2}
+            strokeDasharray={`0 ${interpolated.rotation} ${interpolated.arc} ${circumference}`}
+          />
+        )}
+      </Motion>
+      <Motion style={{ textRotation: spring(textRotation) }}>
+        {interpolated => (
+          <text
+            fill={gradient[7]}
+            transform={`rotate(${interpolated.textRotation}, ${center}, ${center})`}
+          >
+            <textPath xlinkHref="#textCircle">{index + 1}</textPath>
+          </text>
+        )}
+      </Motion>
       <style jsx>{`
-        circle {
-          transition: stroke-dasharray 0.5s;
-        }
         text {
           font-size: 0.6rem;
           text-anchor: middle;
-          transition: 0.5s;
-        }
-        g {
-          transition: 0.5s;
         }
       `}</style>
     </g>
