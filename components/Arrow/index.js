@@ -29,11 +29,13 @@ export default class Arrow extends React.Component {
     const rotation = spin / total * 360
     const length = center * 2 - 12
     return (
-      <svg
-        className={`spinner ${this.state.animation}`}
-        width="100%"
-        height="100%"
-      >
+      <g className={`spinner ${this.state.animation}`}>
+        {/*
+          this <rect> increases the size of the parent <g> so that it fills
+          up to the space of the outer <svg>. Without it, the animation of the
+          <g> tag wouldn't have the correctly centered transform-origin.
+        */}
+        <rect width="100" height="100" fill="none" />
         <Motion
           style={{ rotation: spring(rotation, { stiffness: 25, damping: 15 }) }}
         >
@@ -82,7 +84,7 @@ export default class Arrow extends React.Component {
             animation-name: spin;
           }
         `}</style>
-      </svg>
+      </g>
     )
   }
 }
