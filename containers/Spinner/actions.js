@@ -1,21 +1,24 @@
 import { sum } from 'lodash'
 
 // shows a spinning animation
-export const spin = state => {
+export const start = state => {
   return {
     ...state,
-    phase: 'spinning',
+    phase: 'starting',
     spinnable: false,
   }
 }
 
 // should determine spin result and slowly land on it
-export const land = state => {
+export const spin = state => {
   const spin = Math.floor(Math.random() * sum(state.sizes))
+  const sectorStarts = state.sizes.map((x, i, sizes) => sum(sizes.slice(0, i)))
+  const winner = sectorStarts.filter(start => start <= spin).length - 1
   return {
     ...state,
-    phase: 'landing',
+    phase: 'spinning',
     spin,
+    winner,
   }
 }
 
@@ -29,17 +32,14 @@ export const celebrate = state => {
 
 // should grow & shrink the sectors to their new sizes
 export const resize = state => {
-  const starts = state.sizes.map((x, i, sizes) => sum(sizes.slice(0, i)))
-  const winningIndex = starts.filter(start => start <= state.spin).length - 1
-
   // our largest size must be reduced by a number that is
   // easily divisible by the remaining sectors
-  const rawDelta = state.sizes[winningIndex] * state.reduction
+  const rawDelta = state.sizes[state.winner] * state.reduction
   const delta = rawDelta - rawDelta % (state.sizes.length - 1)
 
   // create new sizes with updated sizes
   const sizes = state.sizes.map((size, index) => {
-    if (index === winningIndex) {
+    if (index === state.winner) {
       return size - delta
     } else {
       return size + delta / 3
@@ -54,7 +54,7 @@ export const resize = state => {
 }
 
 // reset the spinner, make it spinnable again
-export const reset = state => {
+export const end = state => {
   return {
     ...state,
     phase: 'waiting',

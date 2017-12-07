@@ -1,7 +1,7 @@
 import React from 'react'
 import { sum } from 'lodash'
 
-import { spin, land, celebrate, resize, reset } from './actions'
+import { start, spin, celebrate, resize, end } from './actions'
 import { spinMs } from '../../components/constants'
 
 import SVGWrapper from '../../components/SVGWrapper'
@@ -18,18 +18,19 @@ class Spinner extends React.Component {
     reduction: 0.75,
     spin: 0,
     spinnable: true, //adj.	Capable of being spun.
+    winner: 0,
     phase: 'waiting',
   }
   handleSpin = async () => {
-    this.setState(spin)
+    this.setState(start)
     await wait(100)
-    this.setState(land)
+    this.setState(spin)
     await wait(spinMs)
     this.setState(celebrate)
-    await wait(200)
+    await wait(1500)
     this.setState(resize)
     await wait(500)
-    this.setState(reset)
+    this.setState(end)
   }
   render() {
     return (
@@ -40,13 +41,15 @@ class Spinner extends React.Component {
               key={i}
               index={i}
               size={size}
-              start={sum(sizes.slice(0, i))}
+              startAt={sum(sizes.slice(0, i))}
             />
           ))}
           <Arrow spin={this.state.spin} total={sum(this.state.sizes)} />
           <SpinButton
             disabled={!this.state.spinnable}
             onClick={this.handleSpin}
+            winner={this.state.winner}
+            phase={this.state.phase}
           />
         </SVGWrapper>
         <StateDisplay

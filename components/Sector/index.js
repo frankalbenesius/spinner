@@ -1,19 +1,17 @@
 import React from 'react'
 import { Motion, spring } from 'react-motion'
 
-import { sectorRadius, center } from '../constants'
+import { sectorRadius, center, sectorColors } from '../constants'
 const circumference = 2 * Math.PI * sectorRadius
 const textLine = center / 1.5
 import colors from '../colors'
 
-const sectorColors = ['blue', 'red', 'yellow', 'green']
-
-export default ({ index, size, start }) => {
+export default ({ index, size, startAt }) => {
   const percentageOfCircle = size / 1000
   const arc = percentageOfCircle * circumference
-  const rotation = start / 1000 * circumference
-  const gradient = colors[sectorColors[index]]
-  const textRotation = (start / 1000 + percentageOfCircle / 2) * 360
+  const rotation = startAt / 1000 * circumference
+  const shades = colors[sectorColors[index]]
+  const textRotation = (startAt / 1000 + percentageOfCircle / 2) * 360
   return (
     <g>
       <defs>
@@ -35,7 +33,7 @@ export default ({ index, size, start }) => {
             cx={center}
             cy={center}
             fill="none"
-            stroke={gradient[5]}
+            stroke={shades[5]}
             strokeWidth={sectorRadius * 2}
             strokeDasharray={`0 ${interpolated.rotation} ${interpolated.arc} ${circumference}`}
           />
@@ -44,7 +42,7 @@ export default ({ index, size, start }) => {
       <Motion style={{ textRotation: spring(textRotation) }}>
         {interpolated => (
           <text
-            fill={gradient[7]}
+            fill={shades[7]}
             transform={`rotate(${interpolated.textRotation}, ${center}, ${center})`}
           >
             <textPath xlinkHref="#textCircle">{index + 1}</textPath>

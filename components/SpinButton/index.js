@@ -1,14 +1,31 @@
 import React from 'react'
 
-import { viewBoxSize, center } from '../constants'
+import { viewBoxSize, center, sectorColors } from '../constants'
 
 import colors from '../colors'
 
-export default ({ onClick, disabled }) => {
+export default ({ onClick, disabled, winner, phase }) => {
   const handleClick = () => {
     if (!disabled) {
       onClick()
     }
+  }
+  let text, textFill, circleFill
+  switch (phase) {
+    case 'waiting':
+      text = 'SPIN'
+      circleFill = colors.white // white
+      break
+    case 'starting':
+    case 'spinning':
+      text = ''
+      circleFill = colors.gray[8]
+      break
+    case 'celebrating':
+    case 'resizing':
+      text = winner + 1
+      circleFill = colors[sectorColors[winner]][5]
+      break
   }
   return (
     <svg onClick={handleClick} disabled={disabled}>
@@ -17,10 +34,10 @@ export default ({ onClick, disabled }) => {
           r={viewBoxSize / 10}
           cx={center}
           cy={center}
-          className={disabled ? 'disabled' : 'enabled'}
+          fill={circleFill}
         />
-        <text x={center} y={center}>
-          SPIN
+        <text x={center} y={center} className={phase}>
+          {text}
         </text>
       </g>
       <style jsx>
@@ -28,16 +45,8 @@ export default ({ onClick, disabled }) => {
           svg {
             user-select: none;
           }
-          svg circle {
-            fill: ${colors.gray[0]};
+          circle {
             stroke: ${colors.black};
-            transition: 0.1s fill;
-          }
-          svg:hover circle {
-            fill: ${colors.gray[1]};
-          }
-          svg circle.disabled {
-            fill: ${colors.gray[8]};
           }
           text {
             text-anchor: middle;
@@ -46,6 +55,10 @@ export default ({ onClick, disabled }) => {
             font-size: 0.5rem;
             dominant-baseline: central;
             text-transform: uppercase;
+          }
+          text.celebrating,
+          text.resizing {
+            font-size: 1rem;
           }
         `}
       </style>

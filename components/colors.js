@@ -1,6 +1,7 @@
 // https://palx.jxnblk.com/68aae8.json
 export default {
   base: '#68aae8',
+  white: '#f8f9fa',
   black: '#3b3f43',
   gray: [
     '#f8f9fa',
