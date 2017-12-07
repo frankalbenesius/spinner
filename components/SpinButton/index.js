@@ -18,7 +18,7 @@ export default ({ onClick, disabled, winner, phase }) => {
       break
     case 'starting':
     case 'spinning':
-      text = ''
+      text = 'SPIN'
       circleFill = colors.gray[8]
       break
     case 'celebrating':
