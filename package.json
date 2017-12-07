@@ -1,7 +1,8 @@
 {
   "name": "spinner",
   "version": "1.0.0",
-  "description": "A random spinner that adjusts its options' likelihoods over time.",
+  "description":
+    "A random spinner that adjusts its options' likelihoods over time.",
   "author": "Frank Albenesius",
   "license": "MIT",
   "dependencies": {
@@ -22,14 +23,10 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build && next export",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "**/*.js": [
-      "prettier --write",
-      "git add"
-    ]
+    "**/*.js": ["prettier --write", "git add"]
   }
 }
