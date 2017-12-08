@@ -1,3 +1,4 @@
+import ReactGA from 'react-ga'
 import { sum } from 'lodash'
 
 // shows a spinning animation
@@ -14,6 +15,11 @@ export const spin = state => {
   const spin = Math.floor(Math.random() * sum(state.sizes))
   const sectorStarts = state.sizes.map((x, i, sizes) => sum(sizes.slice(0, i)))
   const winner = sectorStarts.filter(start => start <= spin).length - 1
+  ReactGA.event({
+    category: 'Spinner',
+    action: 'Spin',
+    value: spin,
+  })
   return {
     ...state,
     phase: 'spinning',
@@ -44,6 +50,12 @@ export const resize = state => {
     } else {
       return size + delta / 3
     }
+  })
+
+  ReactGA.event({
+    category: 'Spinner',
+    action: 'Resize',
+    value: Math.max(...sizes),
   })
 
   return {
