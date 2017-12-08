@@ -1,6 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
 
+import FontLoader from './FontLoader'
+
 import colors from '../colors'
 
 export default ({ children }) => (
@@ -8,11 +10,8 @@ export default ({ children }) => (
     <Head>
       <title>SPINNER</title>
       <link rel="icon" href="/static/favicon.ico" />
-      <link
-        href="https://fonts.googleapis.com/css?family=Dosis"
-        rel="stylesheet"
-      />
     </Head>
+    <FontLoader /> {/* async font loading */}
     {children}
     <style jsx>{`
       .flex {
@@ -28,7 +27,6 @@ export default ({ children }) => (
         body {
           background-color: ${colors.black};
           margin: 0;
-          font-family: Dosis, Arial, Helvetica, sans-serif;
         }
         * > * {
           box-sizing: border-box;
