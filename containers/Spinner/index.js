@@ -8,7 +8,6 @@ import SVGWrapper from '../../components/SVGWrapper'
 import Sector from '../../components/Sector'
 import Arrow from '../../components/Arrow'
 import SpinButton from '../../components/SpinButton'
-import StateDisplay from '../../components/StateDisplay'
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -34,29 +33,23 @@ class Spinner extends React.Component {
   }
   render() {
     return (
-      <div>
-        <SVGWrapper>
-          {this.state.sizes.map((size, i, sizes) => (
-            <Sector
-              key={i}
-              index={i}
-              size={size}
-              startAt={sum(sizes.slice(0, i))}
-            />
-          ))}
-          <Arrow spin={this.state.spin} total={sum(this.state.sizes)} />
-          <SpinButton
-            disabled={!this.state.spinnable}
-            onClick={this.handleSpin}
-            winner={this.state.winner}
-            phase={this.state.phase}
+      <SVGWrapper>
+        {this.state.sizes.map((size, i, sizes) => (
+          <Sector
+            key={i}
+            index={i}
+            size={size}
+            startAt={sum(sizes.slice(0, i))}
           />
-        </SVGWrapper>
-        <StateDisplay
-          shouldRender={this.props.query.state !== undefined}
-          state={this.state}
+        ))}
+        <Arrow spin={this.state.spin} total={sum(this.state.sizes)} />
+        <SpinButton
+          disabled={!this.state.spinnable}
+          onClick={this.handleSpin}
+          winner={this.state.winner}
+          phase={this.state.phase}
         />
-      </div>
+      </SVGWrapper>
     )
   }
 }
