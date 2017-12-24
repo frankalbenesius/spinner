@@ -20,10 +20,14 @@ class Spinner extends React.Component {
     winner: 0,
     phase: 'waiting',
   }
+  componentDidMount() {
+    this.spinAudio = new Audio('static/spin.m4a')
+  }
   handleSpin = async () => {
     this.setState(start)
     await wait(100)
     this.setState(spin)
+    this.spinAudio.play()
     await wait(spinMs)
     this.setState(celebrate)
     await wait(1500)

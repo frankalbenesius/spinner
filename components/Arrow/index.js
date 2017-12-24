@@ -37,7 +37,7 @@ export default class Arrow extends React.Component {
         */}
         <rect width="100" height="100" fill="none" />
         <Motion
-          style={{ rotation: spring(rotation, { stiffness: 25, damping: 15 }) }}
+          style={{ rotation: spring(rotation, { stiffness: 25, damping: 10 }) }}
         >
           {interpolated => (
             <g
@@ -72,13 +72,14 @@ export default class Arrow extends React.Component {
               transform: rotate(0deg);
             }
             to {
-              transform: rotate(6480deg);
+              transform: rotate(3600deg);
             }
           }
           .spinner {
             transform-origin: center;
-            animation-duration: 5s;
+            animation-duration: 4.5s;
             animation-iteration-count: 1;
+            animation-timing-function: ease;
           }
           .spinning {
             animation-name: spin;
