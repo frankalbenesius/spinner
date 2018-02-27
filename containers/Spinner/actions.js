@@ -38,30 +38,32 @@ export const celebrate = state => {
 
 // should grow & shrink the sectors to their new sizes
 export const resize = state => {
-  // our largest size must be reduced by a number that is
-  // easily divisible by the remaining sectors
-  const rawDelta = state.sizes[state.winner] * state.reduction
-  const delta = rawDelta - rawDelta % (state.sizes.length - 1)
+  const adjustSectors = (sectorSizes, winningIndex) => {
+    const reductionFactor = 0.7
+    const lostingSectorCount = sectorSizes.length - 1
 
-  // create new sizes with updated sizes
-  const sizes = state.sizes.map((size, index) => {
-    if (index === state.winner) {
-      return size - delta
-    } else {
-      return size + delta / 3
-    }
-  })
+    const winningMass = sectorSizes[winningIndex]
+    const losingMass = sum(sectorSizes) - winningMass
+    const movingMass = winningMass * reductionFactor
 
-  ReactGA.event({
-    category: 'Spinner',
-    action: 'Resize',
-    value: Math.max(...sizes),
-  })
+    const newSizes = sectorSizes.map((size, idx) => {
+      const isWinner = idx === winningIndex
+      if (isWinner) {
+        return Math.floor(size - movingMass)
+      } else {
+        const distributionRatio = size / losingMass
+        return Math.floor(size + movingMass * distributionRatio)
+      }
+    })
+    const missingMass = sum(sectorSizes) - sum(newSizes)
+    newSizes[winningIndex] += missingMass
+    return newSizes
+  }
 
   return {
     ...state,
     phase: 'resizing',
-    sizes,
+    sizes: adjustSectors(state.sizes, state.winner),
   }
 }
 

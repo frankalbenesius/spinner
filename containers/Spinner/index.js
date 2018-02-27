@@ -14,7 +14,6 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 class Spinner extends React.Component {
   state = {
     sizes: [250, 250, 250, 250],
-    reduction: 0.75,
     spin: 0,
     spinnable: true, //adj.	Capable of being spun.
     winner: 0,
