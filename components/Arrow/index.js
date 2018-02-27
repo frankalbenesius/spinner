@@ -25,8 +25,8 @@ export default class Arrow extends React.Component {
     }
   }
   render() {
-    const { spin, total } = this.props
-    const rotation = spin / total * 360
+    const { spin } = this.props
+    const rotation = spin * 360
     const length = center * 2 - 12
     return (
       <g className={`spinner ${this.state.animation}`}>

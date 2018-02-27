@@ -12,7 +12,7 @@ export const start = state => {
 
 // should determine spin result and slowly land on it
 export const spin = state => {
-  const spin = Math.floor(Math.random() * sum(state.sizes))
+  const spin = Math.random()
   const sectorStarts = state.sizes.map((x, i, sizes) => sum(sizes.slice(0, i)))
   const winner = sectorStarts.filter(start => start <= spin).length - 1
   ReactGA.event({
@@ -49,14 +49,12 @@ export const resize = state => {
     const newSizes = sectorSizes.map((size, idx) => {
       const isWinner = idx === winningIndex
       if (isWinner) {
-        return Math.floor(size - movingMass)
+        return size - movingMass
       } else {
         const distributionRatio = size / losingMass
-        return Math.floor(size + movingMass * distributionRatio)
+        return size + movingMass * distributionRatio
       }
     })
-    const missingMass = sum(sectorSizes) - sum(newSizes)
-    newSizes[winningIndex] += missingMass
     return newSizes
   }
 

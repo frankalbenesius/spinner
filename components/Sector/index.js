@@ -7,11 +7,10 @@ const textLine = center / 1.5
 import colors from '../colors'
 
 export default ({ index, size, startAt }) => {
-  const percentageOfCircle = size / 1000
-  const arc = percentageOfCircle * circumference
-  const rotation = startAt / 1000 * circumference
+  const arc = size * circumference
+  const rotation = startAt * circumference
   const shades = colors[sectorColors[index]]
-  const textRotation = (startAt / 1000 + percentageOfCircle / 2) * 360
+  const textRotation = (startAt + size / 2) * 360
   return (
     <g>
       <defs>

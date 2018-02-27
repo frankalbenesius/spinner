@@ -13,7 +13,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 class Spinner extends React.Component {
   state = {
-    sizes: [250, 250, 250, 250],
+    sizes: [0.25, 0.25, 0.25, 0.25],
     spin: 0,
     spinnable: true, //adj.	Capable of being spun.
     winner: 0,
@@ -45,7 +45,7 @@ class Spinner extends React.Component {
             startAt={sum(sizes.slice(0, i))}
           />
         ))}
-        <Arrow spin={this.state.spin} total={sum(this.state.sizes)} />
+        <Arrow spin={this.state.spin} />
         <SpinButton
           disabled={!this.state.spinnable}
           onClick={this.handleSpin}
