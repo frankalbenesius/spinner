@@ -19,3 +19,5 @@ This is a spinner made with React. The size of it's sectors changes based on spi
 1. Run the project on a local development server. In this scenario, "dev" is an npm script we've defined in the project's `package.json`. We are telling npm to "run" it.
     
     `npm run dev`
+    
+    This should start the app locally. Which means you should be able to go see the spinner in your web browser at `localhost:3000`. Your terminal will tell you what the address is, too. Now, whenever you make a change to the codebase that change will be immediately updated on the instance running in your browser.
