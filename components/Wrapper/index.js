@@ -18,7 +18,7 @@ export default class Wrapper extends React.Component {
       <div className="flex">
         <Head>
           <title>SPINNER</title>
-          <link rel="icon" href="/static/favicon.ico" />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <FontLoader /> {/* async font loading */}
         {this.props.children}
