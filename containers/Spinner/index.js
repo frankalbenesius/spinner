@@ -8,6 +8,7 @@ import SVGWrapper from '../../components/SVGWrapper'
 import Sector from '../../components/Sector'
 import Arrow from '../../components/Arrow'
 import SpinButton from '../../components/SpinButton'
+import useSectorPress from '../../hooks/useSectorPress'
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -25,11 +26,16 @@ function Spinner() {
     spinAudio = new Audio('/spin.m4a')
   }, [])
 
+  const { pressedSector, resetPressedSector } = useSectorPress()
+
   const handleSpin = async () => {
     setState(start)
     await wait(100)
-    setState(spin)
-    spinAudio.play()
+    setState(spin(pressedSector))
+    resetPressedSector()
+    if (spinAudio) {
+      spinAudio.play()
+    }
     await wait(spinMs)
     setState(celebrate)
     await wait(1500)
@@ -38,31 +44,24 @@ function Spinner() {
     setState(end)
   }
 
-  const [pressedKey, setPressedKey] = useState('keycode')
-  const handleKeyPress = e => {
-    console.log(e)
-  }
-
   return (
-    <div onKeyPress={handleKeyPress}>
-      <SVGWrapper>
-        {state.sizes.map((size, i, sizes) => (
-          <Sector
-            key={i}
-            index={i}
-            size={size}
-            startAt={sum(sizes.slice(0, i))}
-          />
-        ))}
-        <Arrow spin={state.spin} />
-        <SpinButton
-          disabled={!state.spinnable}
-          onClick={handleSpin}
-          winner={state.winner}
-          phase={state.phase}
+    <SVGWrapper>
+      {state.sizes.map((size, i, sizes) => (
+        <Sector
+          key={i}
+          index={i}
+          size={size}
+          startAt={sum(sizes.slice(0, i))}
         />
-      </SVGWrapper>
-    </div>
+      ))}
+      <Arrow spin={state.spin} />
+      <SpinButton
+        disabled={!state.spinnable}
+        onClick={handleSpin}
+        winner={state.winner}
+        phase={state.phase}
+      />
+    </SVGWrapper>
   )
 }
 

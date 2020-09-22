@@ -6,7 +6,7 @@ const circumference = 2 * Math.PI * sectorRadius
 const textLine = center / 1.5
 import colors from '../colors'
 
-export default ({ index, size, startAt }) => {
+const Sector = ({ index, size, startAt }) => {
   const arc = size * circumference
   const rotation = startAt * circumference
   const shades = colors[sectorColors[index]]
@@ -57,3 +57,5 @@ export default ({ index, size, startAt }) => {
     </g>
   )
 }
+
+export default Sector

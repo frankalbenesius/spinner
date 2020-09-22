@@ -11,15 +11,27 @@ export const start = state => {
 }
 
 // should determine spin result and slowly land on it
-export const spin = state => {
-  const spin = Math.random()
+export const spin = cheatSector => state => {
   const sectorStarts = state.sizes.map((x, i, sizes) => sum(sizes.slice(0, i)))
+
+  let spin = Math.random()
+
+  if (cheatSector) {
+    const cheatSectorStart = sectorStarts[cheatSector - 1]
+    const nextSectorStart =
+      cheatSector >= sectorStarts.length ? 1 : sectorStarts[cheatSector]
+    const cheatSectorSize = nextSectorStart - cheatSectorStart
+    spin = cheatSectorStart + cheatSectorSize * Math.random()
+  }
+
   const winner = sectorStarts.filter(start => start <= spin).length - 1
+
   ReactGA.event({
     category: 'Spinner',
     action: 'Spin',
     value: spin,
   })
+
   return {
     ...state,
     phase: 'spinning',
@@ -40,7 +52,6 @@ export const celebrate = state => {
 export const resize = state => {
   const adjustSectors = (sectorSizes, winningIndex) => {
     const reductionFactor = 0.7
-    const lostingSectorCount = sectorSizes.length - 1
 
     const winningMass = sectorSizes[winningIndex]
     const losingMass = sum(sectorSizes) - winningMass
