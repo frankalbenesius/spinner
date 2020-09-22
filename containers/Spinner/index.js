@@ -15,12 +15,16 @@ function Spinner() {
   const [state, setState] = useState({
     sizes: [0.25, 0.25, 0.25, 0.25],
     spin: 0,
-    spinnable: true, //adj.	Capable of being spun.
+    spinnable: true, //adjective: Capable of being spun.
     winner: 0,
     phase: 'waiting',
   })
 
-  const spinAudio = new Audio('/spin.m4a')
+  let spinAudio = undefined
+  useEffect(() => {
+    spinAudio = new Audio('/spin.m4a')
+  }, [])
+
   const handleSpin = async () => {
     setState(start)
     await wait(100)
@@ -34,24 +38,31 @@ function Spinner() {
     setState(end)
   }
 
+  const [pressedKey, setPressedKey] = useState('keycode')
+  const handleKeyPress = e => {
+    console.log(e)
+  }
+
   return (
-    <SVGWrapper>
-      {state.sizes.map((size, i, sizes) => (
-        <Sector
-          key={i}
-          index={i}
-          size={size}
-          startAt={sum(sizes.slice(0, i))}
+    <div onKeyPress={handleKeyPress}>
+      <SVGWrapper>
+        {state.sizes.map((size, i, sizes) => (
+          <Sector
+            key={i}
+            index={i}
+            size={size}
+            startAt={sum(sizes.slice(0, i))}
+          />
+        ))}
+        <Arrow spin={state.spin} />
+        <SpinButton
+          disabled={!state.spinnable}
+          onClick={handleSpin}
+          winner={state.winner}
+          phase={state.phase}
         />
-      ))}
-      <Arrow spin={state.spin} />
-      <SpinButton
-        disabled={!state.spinnable}
-        onClick={handleSpin}
-        winner={state.winner}
-        phase={state.phase}
-      />
-    </SVGWrapper>
+      </SVGWrapper>
+    </div>
   )
 }
 

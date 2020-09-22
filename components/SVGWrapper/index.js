@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { viewBoxSize, center } from '../constants'
-import colors from '../colors'
+import { viewBoxSize } from '../constants'
 
-export default ({ onClick, children }) => (
+const SVGWrapper = ({ onClick, children }) => (
   <svg onClick={onClick} viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}>
     {children}
     <style jsx>
@@ -18,3 +17,5 @@ export default ({ onClick, children }) => (
     </style>
   </svg>
 )
+
+export default SVGWrapper
