@@ -20,7 +20,7 @@ class Spinner extends React.Component {
     phase: 'waiting',
   }
   componentDidMount() {
-    this.spinAudio = new Audio('static/spin.m4a')
+    this.spinAudio = new Audio('/spin.m4a')
   }
   handleSpin = async () => {
     this.setState(start)
