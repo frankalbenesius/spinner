@@ -34,6 +34,7 @@ function Spinner() {
     setState(spin(pressedSector))
     resetPressedSector()
     if (spinAudio) {
+      spinAudio.load()
       spinAudio.play()
     }
     await wait(spinMs)
