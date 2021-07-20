@@ -4,7 +4,7 @@ import { viewBoxSize, center, sectorColors } from '../constants'
 
 import colors from '../colors'
 
-export default ({ onClick, disabled, winner, phase }) => {
+const SpinButton = ({ onClick, disabled, winner, phase }) => {
   const handleClick = () => {
     if (!disabled) {
       onClick()
@@ -65,3 +65,5 @@ export default ({ onClick, disabled, winner, phase }) => {
     </svg>
   )
 }
+
+export default SpinButton
