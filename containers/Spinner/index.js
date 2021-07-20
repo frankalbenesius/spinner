@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useState } from 'react'
 import { sum } from 'lodash'
 
 import { start, spin, celebrate, resize, end } from './actions'
@@ -21,11 +21,6 @@ function Spinner() {
     phase: 'waiting',
   })
 
-  let spinAudio = undefined
-  useEffect(() => {
-    spinAudio = new Audio('/spin.m4a')
-  }, [])
-
   const { pressedSector, resetPressedSector } = useSectorPress()
 
   const handleSpin = async () => {
@@ -33,10 +28,9 @@ function Spinner() {
     await wait(100)
     setState(spin(pressedSector))
     resetPressedSector()
-    if (spinAudio) {
-      spinAudio.load()
-      spinAudio.play()
-    }
+
+    new Audio('/spin.m4a').play()
+
     await wait(spinMs)
     setState(celebrate)
     await wait(1500)
