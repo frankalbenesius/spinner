@@ -4,22 +4,22 @@ import { viewBoxSize, center, sectorColors } from '../constants'
 
 import colors from '../colors'
 
-const SpinButton = ({ onClick, disabled, winner, phase }) => {
+const SpinButton = ({ onClick, disabled, winner, phase, numSpins }) => {
   const handleClick = () => {
     if (!disabled) {
       onClick()
     }
   }
-  let text, textFill, circleFill
+  let text, circleFill
   switch (phase) {
     case 'waiting':
       text = 'SPIN'
-      circleFill = colors.white // white
+      circleFill = numSpins > 0 ? colors[sectorColors[winner]][4] : colors.white // white
       break
     case 'starting':
     case 'spinning':
       text = 'SPIN'
-      circleFill = colors.gray[8]
+      circleFill = colors.gray[6]
       break
     case 'celebrating':
     case 'resizing':

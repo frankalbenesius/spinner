@@ -14,6 +14,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 function Spinner() {
   const [state, setState] = useState({
+    numSpins: 0,
     sizes: [0.25, 0.25, 0.25, 0.25],
     spin: 0,
     spinnable: true, //adjective: Capable of being spun.
@@ -51,6 +52,7 @@ function Spinner() {
       ))}
       <Arrow spin={state.spin} />
       <SpinButton
+        numSpins={state.numSpins}
         disabled={!state.spinnable}
         onClick={handleSpin}
         winner={state.winner}

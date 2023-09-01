@@ -5,6 +5,7 @@ import { sum } from 'lodash'
 export const start = state => {
   return {
     ...state,
+    numSpins: state.numSpins + 1,
     phase: 'starting',
     spinnable: false,
   }
